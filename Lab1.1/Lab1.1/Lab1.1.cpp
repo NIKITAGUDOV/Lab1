@@ -248,7 +248,7 @@ void redact_cs(KOMPRES& cs)
     cout << "Kompres is redacted\n";
 }
 
-void Save_p(const TRUBA& tr)
+void Save_p(const TRUBA& tr, const KOMPRES& cs)
 {
     ofstream save("Lab_data_tr.txt");
     if (save.is_open())
@@ -258,18 +258,8 @@ void Save_p(const TRUBA& tr)
         save << tr.diam << "\n";
         save << tr.rep << "\n";
         cout << "Pipe is saved\n";
-    }
-    else
-        cout << "Unknown error!";
-}
-
-void Save_cs(const KOMPRES& cs)
-{
-    ofstream save("Lab_data_cs.txt");
-    if (save.is_open())
-    {
         save << cs.name_ks << "\n";
-        save <<cs.workshops << "\n";
+        save << cs.workshops << "\n";
         save << cs.workshops << "\n";
         save << cs.workshop_on << "\n";
         cout << "Kompress is saved\n";
@@ -278,7 +268,8 @@ void Save_cs(const KOMPRES& cs)
         cout << "Unknown error!";
 }
 
-void Load_p(TRUBA& tr)
+
+void Load_p(TRUBA& tr, KOMPRES& cs)
 {
     ifstream load("Lab_data_tr.txt");
     if (load.is_open())
@@ -288,17 +279,6 @@ void Load_p(TRUBA& tr)
         load >> tr.diam;
         load >> tr.rep;
         cout << "Pipe is loaded\n";
-    }
-    else
-        cout << "Unknown error!";
-
-}
-
-void Load_cs(KOMPRES& cs)
-{
-    ifstream load("Lab_data_cs.txt");
-    if (load.is_open())
-    {
         load >> cs.name_ks;
         load >> cs.workshops;
         load >> cs.workshops;
@@ -307,6 +287,7 @@ void Load_cs(KOMPRES& cs)
     }
     else
         cout << "Unknown error!";
+
 }
 
 int main()
@@ -363,11 +344,8 @@ int main()
             break;
 
         case 6:
-            if (tr1.len != 0)
-                Save_p(tr1);
-
-            if (cs.workshops != 0)
-                Save_cs(cs);
+            if (tr1.len != 0 || cs.workshops != 0)
+                Save_p(tr1, cs);
 
             if (tr1.len == 0 && cs.workshops == 0)
                 cout << "There are no objects to save\n";
@@ -375,8 +353,7 @@ int main()
             break;
 
         case 7:
-            Load_p(tr1);
-            Load_cs(cs);
+            Load_p(tr1, cs);
             break;
         case 8:
             return 0;
